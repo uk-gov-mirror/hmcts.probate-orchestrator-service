@@ -78,15 +78,6 @@ withParameterizedPipeline('java', product, component, params.ENVIRONMENT, 'sandb
             reportFiles          : "index.html",
             reportName           : "probate-orchestrator-service Code Coverage Report"
     ]
-
-    publishHTML target: [
-            allowMissing         : true,
-            alwaysLinkToLastBuild: true,
-            keepAll              : true,
-            reportDir            : "build/reports/findbugs",
-            reportFiles          : "main.html",
-            reportName           : "probate-orchestrator-service find Bugs Report"
-    ]
   }
 
   after('functionalTest:saat') {
