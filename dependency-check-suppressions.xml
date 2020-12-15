@@ -283,6 +283,22 @@
    ]]></notes>
         <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-core:.*$</gav>
         <cpe>cpe:/a:apache:tomcat</cpe>
+        </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-core-9.0.13.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-core:.*$</gav>
+        <cpe>apache_software_foundation:tomcat</cpe>
+        <cve>CVE-2020-17527</cve>
+        </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-core-9.0.13.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-core:.*$</gav>
+        <cpe>apache_tomcat:apache_tomcat</cpe>
+        <cve>CVE-2020-17527</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
@@ -345,6 +361,7 @@
         <cve>CVE-2020-14195</cve>
         <cve>CVE-2020-24616</cve>
         <cve>CVE-2020-24750</cve>
+        <cve>CVE-2020-25649</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
