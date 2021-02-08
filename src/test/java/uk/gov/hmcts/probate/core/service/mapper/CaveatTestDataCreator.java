@@ -12,6 +12,7 @@ import uk.gov.hmcts.reform.probate.model.cases.RegistryLocation;
 import uk.gov.hmcts.reform.probate.model.cases.caveat.CaveatData;
 import uk.gov.hmcts.reform.probate.model.forms.Address;
 import uk.gov.hmcts.reform.probate.model.forms.AliasOtherNames;
+import uk.gov.hmcts.reform.probate.model.forms.Equality;
 import uk.gov.hmcts.reform.probate.model.forms.Language;
 import uk.gov.hmcts.reform.probate.model.forms.Payment;
 import uk.gov.hmcts.reform.probate.model.forms.Registry;
@@ -49,11 +50,13 @@ public class CaveatTestDataCreator {
     private static final String PAYMENT_SITE_ID = "payment_siteId";
     private static final String PAYMENT_TRANSACTION_ID = "paymentTransactionId";
     private static final String REGNAME = "Birmingham";
+    private static final boolean HAS_ALIAS = true;
     private static final String ALIAS_FIRST_NAME = "aliasFirstName";
     private static final String ALIAS_LASTNAME = "aliasLastname";
     private static final Date DATE = new Date();
     private static final LocalDate EXPIRYDATE = LocalDate.now().plusDays(30);
     private static final String NAME_0 = "name_0";
+    public static final String PCQ_ID = "1000";
 
     public static CaveatForm createCaveatForm() {
         return CaveatForm.builder()
@@ -88,6 +91,7 @@ public class CaveatTestDataCreator {
                 .dateOfDeath(DATE_OF_DEATH)
                 .firstName(DECEASED_FIRST_NAME)
                 .lastName(DECEASED_LAST_NAME)
+                .alias(HAS_ALIAS)
                 .otherNames(createAliasMap())
                 .build())
             .payments(Lists.newArrayList(Payment.builder()
@@ -103,6 +107,7 @@ public class CaveatTestDataCreator {
                         .name(REGNAME)
                         .build())
             .expiryDate(EXPIRYDATE)
+            .equality(Equality.builder().pcqId(PCQ_ID).build())
             .build();
     }
 
@@ -145,6 +150,7 @@ public class CaveatTestDataCreator {
         deceasedAddress.setPostCode(POSTCODE);
         deceasedAddress.setPostTown(POSTTOWN);
         caveatData.setDeceasedAddress(deceasedAddress);
+        caveatData.setDeceasedAnyOtherNames(HAS_ALIAS);
 
         CollectionMember<FullAliasName> aliasNameCollectionMember = new CollectionMember<>();
         FullAliasName aliasName = new FullAliasName();
@@ -169,6 +175,7 @@ public class CaveatTestDataCreator {
 
         caveatData.setCaveatRaisedEmailNotificationRequested(true);
         caveatData.setPaperForm(false);
+        caveatData.setPcqId(PCQ_ID);
         return caveatData;
     }
 

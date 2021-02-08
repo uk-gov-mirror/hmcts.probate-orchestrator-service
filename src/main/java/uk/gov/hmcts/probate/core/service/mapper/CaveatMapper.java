@@ -39,6 +39,8 @@ public interface CaveatMapper extends FormMapper<CaveatData, CaveatForm> {
     @Mapping(target = "deceasedDateOfDeath", source = "deceased.dateOfDeath")
     @Mapping(target = "deceasedFullAliasNameList", source = "deceased.otherNames",
             qualifiedBy = {ToCaveatCollectionMember.class})
+    @Mapping(target = "deceasedAnyOtherNames", source = "deceased.alias")
+
 
     @Mapping(target = "registryLocation", source ="registry.name", qualifiedBy = {ToRegistryLocation.class})
     @Mapping(target = "payments", source = "payments", qualifiedBy = {ToCollectionMember.class})
@@ -46,6 +48,7 @@ public interface CaveatMapper extends FormMapper<CaveatData, CaveatForm> {
     @Mapping(target = "caveatRaisedEmailNotificationRequested", expression = "java(Boolean.TRUE)")
     @Mapping(target = "paperForm", expression = "java(Boolean.FALSE)")
     @Mapping(target = "languagePreferenceWelsh", source = "language.bilingual")
+    @Mapping(target = "pcqId", source = "equality.pcqId")
     CaveatData toCaseData(CaveatForm form);
 
     @Mapping(target = "type", expression = "java(ProbateType.CAVEAT)")

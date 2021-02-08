@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.probate.model.ProbateType;
 import uk.gov.hmcts.reform.probate.model.cases.ApplicationType;
 import uk.gov.hmcts.reform.probate.model.cases.CasePayment;
 import uk.gov.hmcts.reform.probate.model.cases.CollectionMember;
+import uk.gov.hmcts.reform.probate.model.cases.DeathCertificate;
 import uk.gov.hmcts.reform.probate.model.cases.DocumentLink;
 import uk.gov.hmcts.reform.probate.model.cases.DocumentType;
 import uk.gov.hmcts.reform.probate.model.cases.ProbateCalculatedFees;
@@ -29,6 +30,7 @@ import uk.gov.hmcts.reform.probate.model.forms.DeclarationDeclaration;
 import uk.gov.hmcts.reform.probate.model.forms.DeclarationHolder;
 import uk.gov.hmcts.reform.probate.model.forms.DocumentUpload;
 import uk.gov.hmcts.reform.probate.model.forms.Documents;
+import uk.gov.hmcts.reform.probate.model.forms.Equality;
 import uk.gov.hmcts.reform.probate.model.forms.Fees;
 import uk.gov.hmcts.reform.probate.model.forms.IhtMethod;
 import uk.gov.hmcts.reform.probate.model.forms.InheritanceTax;
@@ -54,7 +56,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 
-public class PaTestDataCreator {
+public class PaMultipleExecutorTestDataCreator {
 
     private static final String APPLICANT_EMAIL = "jon.snow.got1234@gmail.com";
     private static final BigDecimal NET_VALUE = new BigDecimal("20000.00");
@@ -76,7 +78,11 @@ public class PaTestDataCreator {
     private static final int NUMBER_UK = 1;
     private static final BigDecimal COST_OVERSEAS = BigDecimal.valueOf(0);
     private static final int NUMBER_OVERSEAS = 0;
+    private static final boolean DECEASED_DIED_ENG_OR_WALES = true;
+    private static final String DECEASED_DEATH_CERT = "optionDeathCertificate";
     private static final boolean DECEASED_ALIAS = false;
+    private static final boolean DECEASED_ENGLISH_FOREIGN_DEATH_CERT = false;
+    private static final boolean DECEASED_FOREIGN_DEATH_CERT_TRANSLATION = true;
     private static final Address DECEASED_ADDRESS = Address.builder().addressLine1("Winterfell")
             .postTown("North Westeros").postCode("GOT123").formattedAddress("Winterfell North Westeros GOT123").build();
     private static final boolean MARRIED = false;
@@ -174,6 +180,7 @@ public class PaTestDataCreator {
     public static final String REGISTRY_EMAIL_ADDRESS = "manchester@hmcts.com";
     public static final long REGISTRY_SEQUENCE_NUMBER = 1L;
     public static final String WELSH = "WELSH";
+    public static final String PCQ_ID = "1000";
 
     private static String LEGAL_DECLARATION_JSON = "{\"legalDeclaration\":{\"headers\":[\"header0\",\"header1\",\"header2\"]," +
             "\"sections\":[{\"headingType\":\"large\",\"title\":\"section title\",\"declarationItems\":[{\"title\":\"declaration title\"," +
@@ -239,6 +246,8 @@ public class PaTestDataCreator {
                 )
                 .deceased(PaDeceased.builder()
                         .alias(DECEASED_ALIAS)
+                        .englishForeignDeathCert(DECEASED_ENGLISH_FOREIGN_DEATH_CERT)
+                        .foreignDeathCertTranslation(DECEASED_FOREIGN_DEATH_CERT_TRANSLATION)
                         .address(DECEASED_ADDRESS)
                         .married(MARRIED)
                         .dateOfBirth(DECEASED_DATE_OF_BIRTH)
@@ -248,6 +257,8 @@ public class PaTestDataCreator {
                         .addresses(objectMapper.readValue(DECEASED_ADDRESSES, new TypeReference<List<Map<String, Object>>>() {
                         }))
                         .postcode(DECEASED_POSTCODE)
+                        .diedEngOrWales(DECEASED_DIED_ENG_OR_WALES)
+                        .deathCertificate(DECEASED_DEATH_CERT)
                         .build())
                 .registry(Registry.builder()
                         .name(MANCHESTER)
@@ -380,6 +391,7 @@ public class PaTestDataCreator {
                 }))
                 .checkAnswersSummary(objectMapper.readValue(CHECK_ANSWERS_JSON, new TypeReference<Map<String, Object>>() {
                 }))
+                .equality(Equality.builder().pcqId(PCQ_ID).build())
                 .build();
     }
 
@@ -393,6 +405,7 @@ public class PaTestDataCreator {
                         .build())
                 .primaryApplicantEmailAddress(APPLICANT_EMAIL)
                 .primaryApplicantPostCode(APPLICANT_POSTCODE)
+                .primaryApplicantIsApplying(true)
                 .applicationSubmittedDate(LocalDate.now())
                 .languagePreferenceWelsh(Boolean.TRUE)
                 .registryLocation(RegistryLocation.findRegistryLocationByName(MANCHESTER))
@@ -415,6 +428,8 @@ public class PaTestDataCreator {
                 .primaryApplicantAliasReason(AliasReason.MARRIAGE)
                 .primaryApplicantPhoneNumber(APPLICANT_PHONE_NUMBER)
                 .deceasedAnyOtherNames(false)
+                .deceasedForeignDeathCertInEnglish(false)
+                .deceasedForeignDeathCertTranslation(true)
                 .deceasedDateOfBirth(DECEASED_DATE_OF_BIRTH.toLocalDate())
                 .deceasedDateOfDeath(DECEASED_DATE_OF_DEATH.toLocalDate())
                 .deceasedSurname(DECEASED_LAST_NAME)
@@ -426,6 +441,8 @@ public class PaTestDataCreator {
                         .postCode(DECEASED_ADDRESS.getPostCode())
                         .build())
                 .deceasedPostCode(DECEASED_POSTCODE)
+                .deceasedDiedEngOrWales(DECEASED_DIED_ENG_OR_WALES)
+                .deceasedDeathCertificate(DeathCertificate.DEATH_CERTIFICATE)
                 .numberOfApplicants(Long.valueOf(EXECUTORS_NUMBER))
                 .numberOfExecutors(Long.valueOf(EXECUTORS_NUMBER))
                 .applicationType(ApplicationType.PERSONAL)
@@ -550,6 +567,7 @@ public class PaTestDataCreator {
                 .checkAnswersSummaryJson(CHECK_ANSWERS_JSON)
                 .deceasedAddresses(DECEASED_ADDRESSES)
                 .primaryApplicantAddresses(APPLICANT_ADDRESSES)
+                .pcqId(PCQ_ID)
                 .build();
     }
 }
